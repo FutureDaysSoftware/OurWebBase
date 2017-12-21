@@ -1,0 +1,48 @@
+{
+  "description": "FutureDays Farm",
+  "engines": {
+    "node": "9.2.1"
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "email": "^0.2.6",
+    "googleapis": "^22.2.0",
+    "jws": "^3.1.4",
+    "libpq": "^1.8.5",
+    "mongodb": "^2.2.30",
+    "node-env-file": "^0.1.8",
+    "pg": "^6.1.2",
+    "pg-copy-streams": "^1.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babelify": "8.0.0",
+    "browserify": "14.5.0",
+    "chai": "^4.1.2",
+    "livereload": "git://github.com/cbaron/node-livereload.git#master",
+    "mocha": "^4.0.1",
+    "smoothscroll-polyfill": "^0.4.0",
+    "stylus": "0.54.5",
+    "toast": "git+ssh://git@github.com/FutureDaysSoftware/Toast.git#v0.0.3",
+    "uglify-js": "3.2.1",
+    "watch": "1.0.2"
+  },
+  "license": "MIT",
+  "name": "OurWebsite",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FutureDaysSoftware/FarmWebsite.git"
+  },
+  "scripts": {
+    "build:css": "stylus stylus/main.styl -o static/main.css && cat static/typeahead.css static/main.css > /tmp/bundle && mv /tmp/bundle static/main.css && gzip -c static/main.css > static/main.css.gz",
+    "build:js": "scripts/writeAssetMaps.js && browserify client/js/main.js -t [ babelify --presets [ env ] ] | uglifyjs > static/debug/bundle.js && gzip -c static/debug/bundle.js > static/bundle.js.gz",
+    "build:js-debug": "scripts/writeAssetMaps.js && browserify client/js/main.js -o static/debug/debug.js -d -t [ babelify --presets [ env ] --ignore [ /node_modules/ ] ] && gzip -c static/debug/debug.js > static/debug/debug.js.gz",
+    "build:watch": "npm run watch:css & npm run watch:js & npm run livereload",
+    "livereload": "scripts/liveReload.js",
+    "test": "mocha --timeout 5000",
+    "watch:css": "watch 'npm run build:css' stylus --ignoreDotFiles --interval=0.5",
+    "watch:js": "watch 'npm run build:js-debug' client/js --ignoreDotFiles --interval=0.5"
+  },
+  "version": "0.0.1"
+}
