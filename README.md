@@ -1,8 +1,6 @@
 # Future Days Farm
 
-A website for the [Future Days Farm](InsertLinkToWebsite).  
-
-## Built With
+A website for the [Future Days Farm](InsertLinkToWebsite)
 
 ## Prerequisites
 
@@ -34,6 +32,7 @@ A website for the [Future Days Farm](InsertLinkToWebsite).
 * `$ node app.js`
 * `$ cd ~/FarmWebsite/`
 * `$ npm run build:watch`
+* Open a web browser and enter the URL: "http://localhost:9001/"
 
 ## Authors
 
