@@ -224,3 +224,42 @@ textarea:focus {
     opacity: 0;
   }
 }
+.Toast {
+  position: fixed;
+  right: 2rem;
+  top: 2rem;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+}
+.Toast .ToastMessage {
+  display: flex;
+  width: 20rem;
+  align-items: center;
+  background-color: $ErrorRed;
+  border-radius: 5px;
+  box-shadow: 0 0 12px #999;
+  color: #fff;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  opacity: 0.8;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.Toast .ToastMessage.success {
+  background-color: #4aa252;
+}
+.Toast .ToastMessage >div:first-child {
+  padding: 0.5rem;
+}
+.Toast .ToastMessage >div:first-child svg {
+  fill: #fff;
+  stroke: #fff;
+  height: 2rem;
+  width: 2rem;
+}
+.Toast .ToastMessage >div:nth-child(2) {
+  padding: 0 0.5rem;
+}
+.Toast .ToastMessage >div:nth-child(2) >div:first-child {
+  font-weight: bold;
+}
