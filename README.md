@@ -11,6 +11,7 @@ A website for the [Future Days Farm](InsertLinkToWebsite)
 
 * `$ npm install n -g`
 * `$ sudo n 9.3.0`
+* `$ git clone https://github.com/FutureDaysSoftware/FarmWebsite.git
 * [Connect to GitHub with SSH](https://help.github.com/articles/connecting-to-github-with-ssh/)
 * `$ cd ~/FarmWebsite/`
 * `$ npm install`
