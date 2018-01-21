@@ -26,6 +26,32 @@ A website for the [Future Days Farm](InsertLinkToWebsite)
 
 ### Linux
 
+## Setting Up Environment
+
+* Create a file called `.env` in the `~/FarmWebsite/` directory
+* Copy and paste these environment variables into the `.env` file:
+```
+COOKIE="farmin"
+
+DOMAIN="localhost"
+
+HTTP_PORT="9001"
+
+NAME="FutureDays Software"
+
+NODE_ENV="DEVELOPMENT"
+
+GOOGLE_BUCKET="five-gallon"
+
+JWS_SECRET="FarmersAreTheWorst"
+
+MONGODB="mongodb://localhost:27017/farm"
+
+SALT="12"
+
+STORAGE_URL="https://storage.googleapis.com/five-gallon/"
+```
+
 ## Running/Testing The Website
 
 * `$ mongod`
