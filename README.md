@@ -37,7 +37,7 @@ A website for the [Future Days Farm](InsertLinkToWebsite)
 ## Authors
 
 * [Future Days Software](https://github.com/FutureDaysSoftware)
-* [Christopher Baron](https://github.com/cbaron)
+* [Chris Baron](https://github.com/cbaron)
 * [Alex Cadigan](https://github.com/AlexCadigan)
 
 ## License
