@@ -33,7 +33,7 @@
   "name": "OurWebsite",
   "repository": {
     "type": "git",
-    "url": "https://github.com/FutureDaysSoftware/FarmWebsite.git"
+    "url": "https://github.com/FutureDaysSoftware/OurWebBase.git"
   },
   "scripts": {
     "build:css": "stylus stylus/main.styl -o static/main.css && cat static/typeahead.css static/main.css > /tmp/bundle && mv /tmp/bundle static/main.css && gzip -c static/main.css > static/main.css.gz",
