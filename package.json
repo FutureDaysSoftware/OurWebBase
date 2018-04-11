@@ -26,6 +26,7 @@
     "stylus": "0.54.5",
     "toast": "git+ssh://git@github.com/FutureDaysSoftware/Toast.git#v0.0.3",
     "uglify-js": "3.2.1",
+    "uuid": "^3.2.1",
     "watch": "1.0.2"
   },
   "license": "MIT",

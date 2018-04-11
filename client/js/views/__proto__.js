@@ -4,6 +4,8 @@ module.exports = Object.assign( { }, require('../../../lib/MyObject'), require('
 
     TemplateContext: require('../TemplateContext'),
 
+    UUID: require('uuid/v4'),
+
     Model: require('../models/__proto__'),
 
     OptimizedResize: require('./lib/OptimizedResize'),
@@ -20,8 +22,8 @@ module.exports = Object.assign( { }, require('../../../lib/MyObject'), require('
     },
 
     constructor( opts={} ) {
-
         if( opts.events ) { Object.assign( this.events, opts.events ); delete opts.events; }
+
         Object.assign( this, opts )
 
         this.subviewElements = [ ]
@@ -92,14 +94,13 @@ module.exports = Object.assign( { }, require('../../../lib/MyObject'), require('
     },
 
     hide( isSlow ) {
-        //views not hiding consistently with this
-        //if( !this.els || this.isHiding ) return Promise.resolve()
+        if( !this.els || this.isHiding ) return Promise.resolve()
 
         this.isHiding = true;
         return this.hideEl( this.els.container, isSlow )
-        .then( () => Promise.resolve( this.hiding = false ) )
+        .then( () => Promise.resolve( this.isHiding = false ) )
     },
-    
+
     hideSync() { this.els.container.classList.add('hidden'); return this },
 
     _hideEl( el, resolve, hash, isSlow ) {
@@ -107,16 +108,15 @@ module.exports = Object.assign( { }, require('../../../lib/MyObject'), require('
         el.classList.add('hidden')
         el.classList.remove(`animate-out${ isSlow ? '-slow' : ''}`)
         delete this[hash]
-        this.isHiding = false
         resolve()
     },
 
     hideEl( el, isSlow ) {
         if( this.isHidden( el ) ) return Promise.resolve()
 
-        const time = new Date().getTime(),
-            hash = `${time}Hide`
-        
+        const uuid = this.UUID(),
+            hash = `${uuid}Hide`
+
         return new Promise( resolve => {
             this[ hash ] = e => this._hideEl( el, resolve, hash, isSlow )
             el.addEventListener( 'animationend', this[ hash ] )
@@ -245,8 +245,8 @@ module.exports = Object.assign( { }, require('../../../lib/MyObject'), require('
     },
 
     showEl( el, isSlow ) {
-        const time = new Date().getTime(),
-            hash = `${time}Show`
+        const uuid = this.UUID(),
+            hash = `${uuid}Show`
 
         return new Promise( resolve => {
             this[ hash ] = e => this._showEl( el, resolve, hash, isSlow )
@@ -261,6 +261,7 @@ module.exports = Object.assign( { }, require('../../../lib/MyObject'), require('
 
         if( key === 'container' ) {
             el.classList.add( this.name )
+            if( this.templateName ) el.classList.add( this.templateName )
             if( this.klass ) el.classList.add( this.klass )
         }
 

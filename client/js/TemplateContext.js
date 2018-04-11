@@ -8,6 +8,12 @@ module.exports = {
       minimumFractionDigits: 2
     } ),
 
+    GetCheckboxes( datum, options ) {
+        const boxes = options.map( option => `<div class="side-by-side"><input ${option.disabled ? 'disabled': ''} type="checkbox" data-js="${option.name}" value="${option.value}"/><label>${option.label}</label></div>` ).join('')
+
+        return `<div data-js=${datum.name} class="form-group"><label>${datum.label}</label><div class="checkbox-row">${boxes}</div></div>`
+    },
+
     GetFormField( datum, value, meta ) {
         const isNested = datum.range === 'List' || typeof datum.range === 'object'
 
@@ -20,9 +26,11 @@ module.exports = {
             : datum.metadata
                 ? datum.metadata.options : false
 
+        const displayType = meta[ datum.name ] && meta[ datum.name ].displayType
+
         const icon = datum.metadata && datum.metadata.icon
             ? this.GetIcon( datum.metadata.icon )
-            : options
+            : options && displayType === 'select'
                 ? this.GetIcon('caret-down')
                 : ``
 
@@ -30,11 +38,19 @@ module.exports = {
             ? `<label>${datum.fk || datum.label}</label>`
             : ``
 
+        const inputName = datum.inputName ? `name="${datum.inputName}"` : ``,
+            autocomplete = datum.autocomplete ? `autocomplete="${datum.autocomplete}"` : ``,
+            readOnly = displayType === 'calendar' ? `readonly="readonly"` : ``
+
         value = ( value === undefined ) ? '' : value
 
         if( options ) {
             if( typeof options === 'function' ) { options(); return this.GetSelect( datum, value, [ ], icon, label ) }
-            else if( Array.isArray( options ) ) return this.GetSelect( datum, value, options, icon, label )
+            if( Array.isArray( options ) && datum.range === 'String' ) {
+                return displayType === 'select'
+                    ? this.GetSelect( datum, value, options, icon, label )
+                    : this.GetCheckboxes( datum, options )
+            }
         }
 
         const prompt = datum.prompt ? `<div class="prompt">${datum.prompt}</div>` : ``
@@ -45,7 +61,7 @@ module.exports = {
                 ? `<textarea data-js="${datum.name}" placeholder="${datum.label || ''}" rows="3">${value}</textarea>`
                 : datum.range === 'List' || datum.range === 'View' || typeof datum.range === 'object'
                     ? `<div data-js="${datum.name}" data-name="${datum.name}"></div>`
-                    : `<input type="${this.RangeToInputType[ datum.range ]}" data-js="${datum.name}" placeholder="${datum.label || ''}" value="${value}" />`
+                    : `<input type="${this.RangeToInputType[ datum.range ]}" data-js="${datum.name}" placeholder="${datum.placeholder || ''}" value="${value}" ${inputName} ${autocomplete} ${readOnly} />`
 
         return `` +
         `<div class="form-group ${isNested ? 'nested' : ''}">
@@ -82,7 +98,6 @@ module.exports = {
         `<div class="form-group">
             ${label}
             <select data-js="${datum.name}">
-                <option disabled ${!selectedValue ? `selected` : ``} value>${datum.label}</option>
                 ${options}
             </select>
             ${icon}
@@ -93,11 +108,11 @@ module.exports = {
         return options.map( option => `<option ${selectedValue === option[ opts.valueAttr ] ? `selected` : ``} value="${option[ opts.valueAttr ]}">${option.label}</option>` ).join('')
     },
 
-    //Icons: require('./.IconMap'),
+    Icons: require('./.IconMap'),
     
     IconDataJs( p ) { return p.name ? `data-js="${p.name}"` : `` },
 
-    ImageSrc( name ) { return `https://storage.googleapis.com/mega-poetry-9665/${name}` },
+    ImageSrc( name ) { return `https://storage.googleapis.com/maricann/${name}` },
 
     Range( int ) {
         return Array.from( Array( int ).keys() )
